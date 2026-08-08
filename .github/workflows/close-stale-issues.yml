@@ -1,0 +1,31 @@
+name: Close Stale Issues
+
+on:
+  schedule:
+    - cron: "0 3 * * 1"
+  workflow_dispatch:
+
+permissions:
+  issues: write
+
+jobs:
+  stale:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Close Stale Issues
+        uses: actions/stale@v11.0.0
+        with:
+          only-issues: true
+          days-before-stale: 60
+          days-before-close: 7
+          stale-issue-label: stale
+          exempt-issue-labels: pinned,security,bug
+          exempt-all-milestones: true
+          exempt-all-assignees: true
+          stale-issue-message: >
+            This issue has been automatically marked as stale because it has had no
+            activity for 60 days. Add a comment to keep it open and remove the stale label.
+          close-issue-message: >
+            This issue has been automatically closed after 7 days of inactivity following
+            the stale warning. Comment if this still needs attention.
+          operations-per-run: 100
